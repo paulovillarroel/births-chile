@@ -63,7 +63,13 @@ todos_nac |>
   summarise(n = n()) |> 
   ggplot(aes(ano_nac, n)) +
   geom_line(color = "#f72585", linewidth = 2) +
-  dark_theme_gray()
+  dark_theme_gray() +
+    labs(
+      title = "Evolución de Nacimientos en Chile (1992 - 2021)",
+      x = "Año",
+      y = "Nacimientos",
+      caption = "Fuente: Datos abiertos DEIS MINSAL"
+    )
 
 
 todos_nac |> 
