@@ -2,4 +2,4 @@
 
 Fuente: DEIS MINSAL
 
-![src\plot-births.png]
+![Gráficos de evolución de nacimientos](src\plot-births.png)
