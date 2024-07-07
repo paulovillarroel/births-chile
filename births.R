@@ -55,3 +55,33 @@ todos_nac |>
   ) +
   dark_theme_gray() +
   facet_wrap(~GRUPO_ETARIO_MADRE, scales = "free_y")
+
+
+todos_nac |> 
+  janitor::clean_names() |> 
+  group_by(ano_nac) |> 
+  summarise(n = n()) |> 
+  ggplot(aes(ano_nac, n)) +
+  geom_line(color = "#f72585", linewidth = 2) +
+  dark_theme_gray()
+
+
+todos_nac |> 
+  janitor::clean_names() |> 
+  group_by(ano_nac) |> 
+  summarise(n = n()) |> 
+  mutate(
+    dif = n - lag(n),
+    variacion_pct = (dif / lag(n)) * 100
+  ) |> 
+  na.omit() |> 
+  ggplot(aes(x = ano_nac, y = variacion_pct, fill = ifelse(variacion_pct < 0, "Negativo", "Positivo"))) +
+  geom_col() +
+  scale_fill_manual(values = c("Negativo" = "#db2763", "Positivo" = "#b0db43")) +
+  scale_x_continuous(breaks = seq(1992, 2021, 2)) +
+  scale_y_continuous(limits = c(-10, 10), breaks = seq(-10, 10, 5), labels = paste0(seq(-10, 10, 5), "%")) +
+  labs(title = "Variación Porcentual Anual del Número de Nacimientos", 
+  x = "Año", 
+  y = "Variación Porcentual (%)", 
+  fill = "Tipo de variación") +
+  dark_theme_gray()
